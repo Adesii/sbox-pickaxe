@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<AssemblyName>pickaxe</AssemblyName>
+		<PackageId>pickaxe</PackageId>
+		<LangVersion>10</LangVersion>
+		<NoWarn>1701;1702;1591;</NoWarn>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<DefineConstants>SANDBOX;ADDON;DEBUG</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Update="**\*.scss" DependentUpon="%(Filename).cs" />
+		<None Update="**\*.css" DependentUpon="%(Filename).cs" />
+		<None Update="**\*.sass" DependentUpon="%(Filename).cs" />
+		<None Update="**\*.html" DependentUpon="%(Filename).cs" />
+		<None Update="**\*.htm" DependentUpon="%(Filename).cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="**/*.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Sandbox.Internal.GlobalToolsNamespace" Static="true" />
+	</ItemGroup>
+
+  <PropertyGroup>
+	<OutputPath>E:\SteamLibrary\steamapps\common\sbox/.vs/output/</OutputPath>
+	<DocumentationFile>E:\SteamLibrary\steamapps\common\sbox/.vs/output/pickaxe.xml</DocumentationFile>
+	<RootNamespace>Pickaxe</RootNamespace>
+	<Nullable>disable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Analyzer Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed\Sandbox.Generator.dll"/>
+		<Reference Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.System.dll" />
+		<Reference Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Engine.dll" />
+		<Reference Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Event.dll" />
+		<Reference Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Bind.dll" />
+		<Reference Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Reflection.dll" />
+		<Reference Include="E:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Tools.dll" />
+	</ItemGroup>
+
+  <ItemGroup>
+		<ProjectReference Include="E:\SteamLibrary\steamapps\common\sbox\addons\tools\tools.csproj" />
+
+  </ItemGroup>
+
+</Project>
