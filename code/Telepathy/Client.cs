@@ -165,7 +165,7 @@ namespace Telepathy
 			catch ( Exception exception )
 			{
 				// something went wrong. probably important.
-				Log.Warning( "Client Recv Exception: " + exception );
+				//Log.Warning( "Client Recv Exception: " + exception );
 			}
 			// add 'Disconnected' event to receive pipe so that the caller
 			// knows that the Connect failed. otherwise they will never know
