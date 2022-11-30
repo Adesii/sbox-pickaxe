@@ -15,7 +15,7 @@ namespace Pickaxe;
 public class PickaxeClient
 {
 	public static bool IsServer { get; set; } = false;
-	private static PlayerClient _client { get; set; } = new PlayerClient( 4096 );
+	private static PlayerClient Client { get; set; } = new PlayerClient( 4096 );
 	public static PlayerClient LocalClient
 	{
 		get
@@ -24,22 +24,16 @@ public class PickaxeClient
 			{
 				return null;
 			}
-			if ( _client == null )
-			{
-				_client = new PlayerClient( 4096 );
-			}
-			return _client;
+			Client ??= new PlayerClient( 4096 );
+			return Client;
 		}
 		set
 		{
-			if ( _client != null )
-			{
-				_client.Disconnect();
-			}
-			_client = value;
+			Client?.Disconnect();
+			Client = value;
 		}
 	}
-	private static Telepathy.Server _server { get; set; } = new Telepathy.Server( 4096 );
+	private static Telepathy.Server Server { get; set; } = new Telepathy.Server( 4096 );
 	public static Telepathy.Server LocalServer
 	{
 		get
@@ -48,19 +42,13 @@ public class PickaxeClient
 			{
 				return null;
 			}
-			if ( _server == null )
-			{
-				_server = new Telepathy.Server( 4096 );
-			}
-			return _server;
+			Server ??= new Telepathy.Server( 4096 );
+			return Server;
 		}
 		set
 		{
-			if ( _server != null )
-			{
-				_server.Stop();
-			}
-			_server = value;
+			Server?.Stop();
+			Server = value;
 		}
 	}
 
@@ -177,7 +165,7 @@ public class PickaxeClient
 		else
 		{
 			LocalClient.Disconnect();
-			delayReconnect();
+			DelayReconnect();
 		}
 
 	}
@@ -211,7 +199,7 @@ public class PickaxeClient
 		Players.Clear();
 	}
 
-	private static async void delayReconnect()
+	private static async void DelayReconnect()
 	{
 		await Task.Delay( 1000 );
 		LocalClient.Connect( LocalClient.ConnectedIP, SERVERPORT );
@@ -235,8 +223,8 @@ public class PickaxeClient
 	private static void Server_OnDisconnected( int obj )
 	{
 		Log.Info( $"Client {obj} disconnected" );
-		if ( Players.ContainsKey( obj ) )
-			Players[obj].Dispose();
+		if ( Players.TryGetValue( obj, out PlayerClient value ) )
+			value.Dispose();
 		Players.Remove( obj );
 		UpdateUI();
 	}
@@ -305,10 +293,10 @@ public class PickaxeClient
 	{
 		var testent = new MapEntity
 		{
-			ClassName = "info_target"
+			ClassName = "info_target",
+			Position = Vector3.Random * 100,
+			Angles = Angles.Random
 		};
-		testent.Position = Vector3.Random * 100;
-		testent.Angles = Angles.Random;
 		SendEntity( testent );
 	}
 
@@ -364,7 +352,7 @@ public class PickaxeClient
 		int id = 0;
 		foreach ( var item in Hammer.ActiveMap.World.Children )
 		{
-			if ( item is MapNode )
+			if ( !item.IsValid() )
 			{
 				if ( item == node )
 				{
@@ -381,7 +369,7 @@ public class PickaxeClient
 		int id = 0;
 		foreach ( var item in Hammer.ActiveMap.World.Children )
 		{
-			if ( item is MapNode )
+			if ( !item.IsValid() )
 			{
 				if ( id == index )
 				{

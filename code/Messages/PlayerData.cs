@@ -16,7 +16,7 @@ public struct PlayerData : IBinarySerialize
 
 	public void Serialize( ref BinaryWriter writer )
 	{
-		writer.Write( ((int)MessageType.PlayerData) );
+		writer.Write( (int)MessageType.PlayerData );
 		writer.Write( Name );
 		writer.Write( SteamID );
 	}

@@ -28,6 +28,7 @@ public interface IBinarySerialize
 }
 
 
+
 public enum MessageType
 {
 	PlayerData = 0,

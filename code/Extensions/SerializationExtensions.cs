@@ -7,6 +7,8 @@ using Pickaxe.Messages;
 using Tools.MapDoc;
 using Tools.MapEditor;
 
+namespace Pickaxe.Extensions;
+
 public static class SerializationExtensions
 {
 
@@ -65,7 +67,7 @@ public static class SerializationExtensions
 		using var stream = new MemoryStream();
 		var writer = new BinaryWriter( stream );
 
-		writer.Write( ((int)MessageType.EntityUpdate) );
+		writer.Write( (int)MessageType.EntityUpdate );
 		writer.Write( id );
 		writer.Write( updates.Count );
 		foreach ( var update in updates )

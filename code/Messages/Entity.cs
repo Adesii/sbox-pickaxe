@@ -19,7 +19,7 @@ public struct EntityData : IBinarySerialize
 
 	public void Serialize( ref BinaryWriter writer )
 	{
-		writer.Write( ((int)MessageType.EntityData) );
+		writer.Write( (int)MessageType.EntityData );
 		writer.Write( Position );
 		writer.Write( Rotation );
 		writer.Write( ClassName );

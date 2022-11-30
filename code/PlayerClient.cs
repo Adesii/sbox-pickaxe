@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Pickaxe.Extensions;
 using Pickaxe.Messages;
 using Telepathy;
 using Tools.MapDoc;
@@ -87,6 +88,7 @@ public class PlayerClient : Client
 	{
 		try
 		{
+#pragma warning disable CA1416 // Validate platform compatibility
 			var steaminstall = Microsoft.Win32.Registry.GetValue( "HKEY_CURRENT_USER\\Software\\Valve\\Steam", "SteamPath", "No Steam installed" ) as string;
 			if ( steaminstall == "No Steam installed" )
 			{
